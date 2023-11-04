@@ -43,9 +43,14 @@ int main()
           cpr :: Response r = cpr :: Patch(cpr :: Url("http://httpbin.org/patch"));
           cout << r.text << endl;  
         }
+
+        else
+        {
+          cout << "input error" << endl;
+        }
        
     }
-    cout << "input error" << endl;
+    cout << "program completed" << endl;
 
     return 0;
 }
