@@ -6,51 +6,36 @@ using namespace std;
 
 int main()
 {
-    string command;
-
-    while(command != "exit")
-    {
-        cout << "enter command: ";
-        cin >> command;
-
-        if(command == "get")
-        {
-        cpr :: Response r = cpr :: Get(cpr :: Url("http://httpbin.org/get"));
-        cout << r.text << endl;
-        }
+     // Создаем объект сессии
+    cpr::Session session;
+    
+    // Устанавливаем URL для запроса
+    session.SetUrl("http://httpbin.org/html");
+    
+    // Устанавливаем заголовок accept: text/html
+    session.SetHeader(cpr::Header{{"accept", "text/html"}});
+    
+    // Выполняем запрос
+    cpr::Response response = session.Get();
+    
+    // Проверяем успешность запроса
+    if (response.status_code == 200) {
+        // Ищем заголовок статьи между тегами <h1></h1>
+        string html = response.text;
+        size_t start_pos = html.find("<h1>");
+        size_t end_pos = html.find("</h1>", start_pos);
         
-
-        else if(command == "post")
-        {
-         cpr :: Response r = cpr :: Post(cpr :: Url("http://httpbin.org/post"));
-         cout << r.text << endl;
+        if (start_pos != string::npos && end_pos != string::npos) {
+            string title = html.substr(start_pos + 4, end_pos - start_pos - 4);
+            cout << "Заголовок статьи: " << title << std::endl;
+        } else {
+            cout << "Заголовок статьи не найден." << std::endl;
         }
-
-        else if(command == "put")
-        {
-          cpr :: Response r = cpr :: Put(cpr :: Url("http://httpbin.org/put"));
-          cout << r.text << endl;  
-        }
-
-        else if(command == "delete")
-        {
-          cpr :: Response r = cpr :: Delete(cpr :: Url("http://httpbin.org/delete"));
-          cout << r.text << endl;  
-        }
-       
-        else if(command == "patch")
-        {
-          cpr :: Response r = cpr :: Patch(cpr :: Url("http://httpbin.org/patch"));
-          cout << r.text << endl;  
-        }
-
-        else
-        {
-          cout << "input error" << endl;
-        }
-       
+    } else {
+        cout << "Ошибка при выполнении запроса." << std::endl;
     }
-    cout << "program completed" << endl;
+
+    
 
     return 0;
 }
