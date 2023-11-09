@@ -1,41 +1,46 @@
 #include <iostream>
 #include <cpr/cpr.h>
+#include <map>
 
 using namespace std;
 
 
 int main()
 {
-     // Создаем объект сессии
-    cpr::Session session;
-    
-    // Устанавливаем URL для запроса
-    session.SetUrl("http://httpbin.org/html");
-    
-    // Устанавливаем заголовок accept: text/html
-    session.SetHeader(cpr::Header{{"accept", "text/html"}});
-    
-    // Выполняем запрос
-    cpr::Response response = session.Get();
-    
-    // Проверяем успешность запроса
-    if (response.status_code == 200) {
-        // Ищем заголовок статьи между тегами <h1></h1>
-        string html = response.text;
-        size_t start_pos = html.find("<h1>");
-        size_t end_pos = html.find("</h1>", start_pos);
-        
-        if (start_pos != string::npos && end_pos != string::npos) {
-            string title = html.substr(start_pos + 4, end_pos - start_pos - 4);
-            cout << "Заголовок статьи: " << title << std::endl;
-        } else {
-            cout << "Заголовок статьи не найден." << std::endl;
+     std::string url = "https://httpbin.org/";
+    std::string method;
+    std::map<std::string, std::string> arguments;
+
+    // Ввод аргументов
+    std::string key, value;
+    while (true) {
+        std::cout << "Введите название аргумента: ";
+        std::cin >> key;
+        if (key == "post" || key == "get") {
+            method = key;
+            break;
         }
-    } else {
-        cout << "Ошибка при выполнении запроса." << std::endl;
+        std::cout << "Введите значение аргумента: ";
+        std::cin >> value;
+        arguments[key] = value;
     }
 
-    
+    // Формирование запроса
+    cpr::Parameters params;
+    for (const auto& arg : arguments) {
+        params.Add(cpr::Parameter{arg.first, arg.second});
+    }
 
+    // Выполнение запроса
+    cpr::Response response;
+    if (method == "post") {
+        response = cpr::Post(cpr::Url{url + "post"}, params);
+    } else if (method == "get") {
+        response = cpr::Get(cpr::Url{url + "get"}, params);
+    }
+
+    // Вывод ответа сервера
+    std::cout << response.text << std::endl;
+  
     return 0;
 }
