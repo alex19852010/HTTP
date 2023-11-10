@@ -25,22 +25,29 @@ int main()
         arguments[key] = value;
     }
 
-    // Формирование запроса
-    cpr::Parameters params;
-    for (auto arg : arguments) {
-        params.Add(cpr::Parameter{arg.first, arg.second});
+    if(method == "post")
+    {
+      for (auto arg : arguments) {
+          cpr::Response r = cpr::Post(cpr::Url{"http://www.httpbin.org/post"},
+          cpr::Payload({{"key",arg.first}, {"value", arg.second}}));
+          std::cout << r.text << std::endl;
     }
 
-    // Выполнение запроса
-    cpr::Response response;
-    if (method == "post") {
-        response = cpr::Post(cpr::Url{url + "post"}, params);
-    } else if (method == "get") {
-        response = cpr::Get(cpr::Url{url + "get"}, params);
     }
 
-    // Вывод ответа сервера
-    cout << response.text << std::endl;
+   
+     else if (method == "get")
+      {
+        for (auto arg : arguments) {
+            cpr::Response r = cpr::Get(cpr::Url{"http://www.httpbin.org/get"},
+            cpr::Parameters{{"key", arg.first}, {"value", arg.second}});
+            std::cout << r.text << std::endl;
+     }
+     
+     }
+    
+
   
     return 0;
 }
+
