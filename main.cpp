@@ -27,7 +27,7 @@ int main()
 
     // Формирование запроса
     cpr::Parameters params;
-    for (const auto& arg : arguments) {
+    for (auto arg : arguments) {
         params.Add(cpr::Parameter{arg.first, arg.second});
     }
 
