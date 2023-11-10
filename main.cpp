@@ -7,47 +7,43 @@ using namespace std;
 
 int main()
 {
-    string url = "https://httpbin.org/";
-    string method;
-    map<string, string> arguments;
+     std::string url = "https://httpbin.org/";
+    std::string method;
+    std::map<std::string, std::string> arguments;
 
     // Ввод аргументов
-    string key, value;
+    std::string key, value;
     while (true) {
-        cout << "enter argument name: ";
-        cin >> key;
+        std::cout << "enter argument name: ";
+        std::cin >> key;
         if (key == "post" || key == "get") {
             method = key;
             break;
         }
-        cout << "enter value argument: ";
-        cin >> value;
+        std::cout << "enter value argument: ";
+        std::cin >> value;
         arguments[key] = value;
     }
-
-    if(method == "post")
-    {
-      for (auto arg : arguments) {
-          cpr::Response r = cpr::Post(cpr::Url{"http://www.httpbin.org/post"},
-          cpr::Payload({{"key",arg.first}, {"value", arg.second}}));
-          std::cout << r.text << std::endl;
+    // Формирование запроса
+    cpr::Parameters params;
+    cpr::Payload payload({{"", ""}});
+    for (auto arg : arguments) {
+        params.Add(cpr::Parameter{arg.first, arg.second});
+        payload.Add({arg.first, arg.second});
     }
-
+    // Выполнение запроса
+    cpr::Response response;
+    if (method == "post") {
+        response = cpr::Post(cpr::Url{url + "post"}, payload);
+    } else if (method == "get") {
+        response = cpr::Get(cpr::Url{url + "get"}, params);
     }
+    // Вывод ответа сервера
+    std::cout << response.text << std::endl;
 
-   
-     else if (method == "get")
-      {
-        for (auto arg : arguments) {
-            cpr::Response r = cpr::Get(cpr::Url{"http://www.httpbin.org/get"},
-            cpr::Parameters{{"key", arg.first}, {"value", arg.second}});
-            std::cout << r.text << std::endl;
-     }
-     
-     }
     
-
-  
     return 0;
 }
+
+
 
