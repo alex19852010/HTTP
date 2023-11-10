@@ -7,21 +7,21 @@ using namespace std;
 
 int main()
 {
-     std::string url = "https://httpbin.org/";
-    std::string method;
-    std::map<std::string, std::string> arguments;
+    string url = "https://httpbin.org/";
+    string method;
+    map<string, string> arguments;
 
     // Ввод аргументов
-    std::string key, value;
+    string key, value;
     while (true) {
-        std::cout << "enter argument name: ";
-        std::cin >> key;
+        cout << "enter argument name: ";
+        cin >> key;
         if (key == "post" || key == "get") {
             method = key;
             break;
         }
-        std::cout << "enter value argument: ";
-        std::cin >> value;
+        cout << "enter value argument: ";
+        cin >> value;
         arguments[key] = value;
     }
 
@@ -40,7 +40,7 @@ int main()
     }
 
     // Вывод ответа сервера
-    std::cout << response.text << std::endl;
+    cout << response.text << std::endl;
   
     return 0;
 }
