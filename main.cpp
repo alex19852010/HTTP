@@ -14,13 +14,13 @@ int main()
     // Ввод аргументов
     std::string key, value;
     while (true) {
-        std::cout << "Введите название аргумента: ";
+        std::cout << "enter argument name: ";
         std::cin >> key;
         if (key == "post" || key == "get") {
             method = key;
             break;
         }
-        std::cout << "Введите значение аргумента: ";
+        std::cout << "enter value argument: ";
         std::cin >> value;
         arguments[key] = value;
     }
