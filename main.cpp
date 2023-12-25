@@ -1,46 +1,41 @@
 #include <iostream>
-#include <cpr/cpr.h>
-#include <map>
+#include <fstream>
+#include "nlohmann/json.hpp"
 
 using namespace std;
 
+ using json = nlohmann::json;
 
 int main()
 {
-     std::string url = "https://httpbin.org/";
-    std::string method;
-    std::map<std::string, std::string> arguments;
+ 
+    nlohmann::json movieInfo;
 
-    // Ввод аргументов
-    std::string key, value;
-    while (true) {
-        std::cout << "enter argument name: ";
-        std::cin >> key;
-        if (key == "post" || key == "get") {
-            method = key;
-            break;
-        }
-        std::cout << "enter value argument: ";
-        std::cin >> value;
-        arguments[key] = value;
-    }
-    // Формирование запроса
-    cpr::Parameters params;
-    cpr::Payload payload({{"", ""}});
-    for (auto arg : arguments) {
-        params.Add(cpr::Parameter{arg.first, arg.second});
-        payload.Add({arg.first, arg.second});
-    }
-    // Выполнение запроса
-    cpr::Response response;
-    if (method == "post") {
-        response = cpr::Post(cpr::Url{url + "post"}, payload);
-    } else if (method == "get") {
-        response = cpr::Get(cpr::Url{url + "get"}, params);
-    }
-    // Вывод ответа сервера
-    std::cout << response.text << std::endl;
+    // Добавляем информацию о фильме
+    movieInfo["title"] = "Название фильма";
+    movieInfo["country"] = "Страна";
+    movieInfo["release_date"] = "Дата выхода";
+    movieInfo["studio"] = "Студия";
+    movieInfo["screenwriter"] = "Автор сценария";
+    movieInfo["director"] = "Режиссер";
+    movieInfo["producer"] = "Продюсер";
 
+    // Создаем JSON-массив для актеров
+    json actors;
+    actors.push_back("Актер 5");
+    actors.push_back("Актер 6");
+    actors.push_back("Актер 7");
+
+    // Добавляем массив актеров в словарь
+    movieInfo["actors"] = actors;
+
+    // Сохраняем JSON-словарь в файл
+    ofstream file("movie_info.json");
+    file << movieInfo.dump(4); // 4 - количество пробелов для форматирования
+    file.close();
+
+    
+   
     
     return 0;
 }
