@@ -3,40 +3,32 @@
 #include "nlohmann/json.hpp"
 
 using namespace std;
-
- using json = nlohmann::json;
+using json = nlohmann::json;
 
 int main()
 {
  
-    nlohmann::json movieInfo;
+ nlohmann::json moveinfo;
 
-    // Добавляем информацию о фильме
-    movieInfo["title"] = "Название фильма";
-    movieInfo["country"] = "Страна";
-    movieInfo["release_date"] = "Дата выхода";
-    movieInfo["studio"] = "Студия";
-    movieInfo["screenwriter"] = "Автор сценария";
-    movieInfo["director"] = "Режиссер";
-    movieInfo["producer"] = "Продюсер";
+ moveinfo["title"] = "Home alone";  
+ moveinfo["country"] = "United States";
+ moveinfo["release date"] = "1990";
+ moveinfo["studio"] = "20 th Century Fox";
+ moveinfo["screemwriter"] = "John Hughes";
+ moveinfo["director"] = "Chris Columbus";
+ moveinfo["producer"] = "John Hughes";
 
-    // Создаем JSON-массив для актеров
-    json actors;
-    actors.push_back("Актер 5");
-    actors.push_back("Актер 6");
-    actors.push_back("Актер 7");
+ json actors;
+ actors.push_back("Macaulay Culkin");
+ actors.push_back("Joe Pesci");
+ actors.push_back("Daniel Stern");
+ actors.push_back("Catherine O'Hara");
 
-    // Добавляем массив актеров в словарь
-    movieInfo["actors"] = actors;
+ moveinfo["actors"] = actors;
 
-    // Сохраняем JSON-словарь в файл
-    ofstream file("movie_info.json");
-    file << movieInfo.dump(4); // 4 - количество пробелов для форматирования
-    file.close();
-
-    
-   
-    
+ ofstream file("movies_info.json");
+ file << moveinfo.dump(1);
+ file.close();
     return 0;
 }
 
