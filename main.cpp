@@ -8,27 +8,91 @@ using json = nlohmann::json;
 int main()
 {
  
- nlohmann::json moveinfo;
+ json database;
+ nlohmann::json movie1;
 
- moveinfo["title"] = "Home alone";  
- moveinfo["country"] = "United States";
- moveinfo["release date"] = "1990";
- moveinfo["studio"] = "20 th Century Fox";
- moveinfo["screemwriter"] = "John Hughes";
- moveinfo["director"] = "Chris Columbus";
- moveinfo["producer"] = "John Hughes";
+ movie1["title"] = "Home alone 1";  
+ movie1["country"] = "United States";
+ movie1["release date"] = "1990";
+ movie1["studio"] = "20 th Century Fox";
+ movie1["screemwriter"] = "John Hughes";
+ movie1["director"] = "Chris Columbus";
+ movie1["producer"] = "John Hughes";
 
- json actors;
- actors.push_back("Macaulay Culkin");
- actors.push_back("Joe Pesci");
- actors.push_back("Daniel Stern");
- actors.push_back("Catherine O'Hara");
+ json actors1;
+ actors1.push_back("Macaulay Culkin");
+ actors1.push_back("Joe Pesci");
+ actors1.push_back("Daniel Stern");
+ actors1.push_back("Catherine O'Hara");
 
- moveinfo["actors"] = actors;
+ movie1["actors"] = actors1;
 
- ofstream file("movies_info.json");
- file << moveinfo.dump(1);
- file.close();
+
+ nlohmann::json movie2;
+ movie2["title"] = "Home alone 2";
+ movie2["country"]  = "United States";
+ movie2["release date"] = "1992";
+ movie2["studio"] = "20 th Century Fox";
+ movie2["screemwriter"] = "John Hughes";
+ movie2["director"] = "Chris Columbus";
+ movie2["producer"] = "John Hughes";
+
+ json actors2;
+ actors2.push_back("Macaulay Culkin");
+ actors2.push_back("Joe Pesci");
+ actors2.push_back("Daniel Stern");
+ actors2.push_back("Tim Curry");
+ actors2.push_back("Brenda Fricker");
+
+ movie2["actors"] = actors2;
+
+ nlohmann::json movie3;
+ movie3["title"] = "terminator 1";
+ movie3["country"] = "United States";
+ movie2["release date"] = "1984";
+ movie3["studio"] = "Orion Pictures";
+ movie3["screemwriter"] = "James Cameron";
+ movie3["director"] = "James Cameron";
+ movie3["producer"] = "Gale Anne Hurd";
+
+ json actors3;
+ actors3.push_back("Arnold Schwarzenegger");
+ actors3.push_back("Linda Hamilton");
+ actors3.push_back("Michael Biehn");
+ actors3.push_back("Paul Winfield");
+
+ movie3["actors"] = actors3;
+
+ 
+ nlohmann::json movie4;
+ movie4["title"] = "terminator 2";
+ movie4["country"] = "United States";
+ movie4["release date"] = "1991";
+ movie4["studio"] = "	Orion Pictures";
+ movie4["screemwriter"] = "William Wisher";
+ movie4["director"] = "James Cameron";
+ movie4["producer"] = "Gale Anne Hurd";
+
+ json actors4;
+ actors4.push_back("Arnold Schwarzenegger");
+ actors4.push_back("Linda Hamilton");
+ actors4.push_back("Robert Patrick");
+ 
+ movie4["actors"] = actors3;
+
+ database["Home alone 1"] = movie1;
+ database["home alone 2"] = movie2;
+ database["terminator 1"] =movie3;
+ database["terminator 2"] =movie4;
+
+
+
+ofstream file("movies_info.json");
+file << database.dump(1);
+file.close();
+//  ofstream file("movies_info.json");
+//  file << movie1.dump(1);
+//  file.close();
     return 0;
 }
 
