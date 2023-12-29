@@ -82,19 +82,32 @@ int main()
 
  database["Home alone 1"] = movie1;
  database["home alone 2"] = movie2;
- database["terminator 1"] =movie3;
- database["terminator 2"] =movie4;
+ database["terminator 1"] = movie3;
+ database["terminator 2"] = movie4;
 
 
 
 ofstream file("movies_info.json");
 file << database.dump(1);
 file.close();
-//  ofstream file("movies_info.json");
-//  file << movie1.dump(1);
-//  file.close();
+
+string actorName;
+cout << "enter name actors: ";
+getline(cin, actorName);
+cout << actorName << endl;
+
+   
+    for (auto& movie : database.items()) {
+        json movieInfo = movie.value();
+        json actors = movieInfo["actors"];
+        for (const auto& actor : actors) {
+            if (actor == actorName) {
+                cout << "film: " << movie.key() << endl;
+                break;
+            }
+        }
+    }
+
     return 0;
 }
-
-
 
