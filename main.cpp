@@ -78,7 +78,7 @@ int main()
  actors4.push_back("Linda Hamilton");
  actors4.push_back("Robert Patrick");
  
- movie4["actors"] = actors3;
+ movie4["actors"] = actors4;
 
  database["Home alone 1"] = movie1;
  database["home alone 2"] = movie2;
@@ -94,9 +94,8 @@ file.close();
 string actorName;
 cout << "enter name actors: ";
 getline(cin, actorName);
-cout << actorName << endl;
 
-   
+
     for (auto& movie : database.items()) {
         json movieInfo = movie.value();
         json actors = movieInfo["actors"];
