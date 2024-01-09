@@ -7,8 +7,3 @@ required string name = 3;
 optional string business_type = 4;
 optional bool foreign_trade = 5;
 }
-
-
-
-
-
